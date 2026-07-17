@@ -1,4 +1,3 @@
-# index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +17,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#171717; /* Matches the dark background in your image */
+    background:#171717; 
     overflow:hidden;
     font-family:Inter,system-ui,sans-serif;
 }
@@ -44,30 +43,30 @@ body{
     opacity: 0.6;
     left: 50%;
     top: 0;
-    transform-origin: 0px 110px; /* Pivots around the center of the 220px clock */
+    transform-origin: 0px 110px; 
     margin-left: -1px;
 }
 
 /* Hands Configuration */
 .hand{
     position:absolute;
-    bottom: 50%; /* Anchor bottom edge to center line */
+    bottom: 50%; 
     left:50%;
-    transform-origin: 50% 100%; /* Rotate around bottom-center */
+    transform-origin: 50% 100%; 
     border-radius:50px;
     background:#4DAB7A;
 }
 
 .hour{
     width: 3px;
-    height: 60px; /* Length of hour hand */
+    height: 60px; 
     margin-left: -1.5px;
     opacity:.95;
 }
 
 .minute{
     width: 2px;
-    height: 85px; /* Length of minute hand */
+    height: 85px; 
     margin-left: -1px;
     opacity:.8;
 }
@@ -89,7 +88,7 @@ body{
 .center{
     position:absolute;
     left:50%;
-    top: 65%; /* Shifted down to match layout */
+    top: 65%; 
     transform:translateX(-50%);
     display:flex;
     flex-direction:column;
@@ -99,10 +98,11 @@ body{
 
 .time{
     font-family: "SF Mono", "JetBrains Mono", "IBM Plex Mono", monospace;
-    font-size:26px; /* Slightly scaled down to match style */
+    font-size:26px; 
     font-weight:400;
     letter-spacing:1px;
     color:#4DAB7A;
+    white-space: nowrap; /* Keep time and AM/PM on the same line */
 }
 
 .date{
@@ -150,10 +150,9 @@ function update(){
     const m = now.getMinutes();
     
     // Calculate 12-hour AM/PM formatting values
-    const ampm = h >= 12 ? 'AM' : 'PM';
+    const ampm = h >= 12 ? 'PM' : 'AM';
     const displayHour = h % 12 === 0 ? 12 : h % 12;
 
-    // Standard clock math configurations (pointing upward initially via bottom anchor layout)
     const hourAngle = (h % 12) * 30 + m * 0.5;
     const minuteAngle = m * 6;
 
