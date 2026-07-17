@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aesthetic Minimalist Clock</title>
-
 <style>
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,210 +17,125 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #191919; 
+    background: #191919; /* Warm off-black background */
     overflow: hidden;
     user-select: none;
 }
 
+/* Minimalist White Clock Container */
 .clock {
-    width: 260px;
-    height: 260px;
+    width: 200px;
+    height: 200px;
+    border: 2px solid #ffffff; /* Switched from green to clean white */
+    border-radius: 50%;
     position: relative;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); /* Subtle white glow */
 }
 
-/* 12 Hour Ticks */
-.ticks {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-/* Standard Minor Ticks (1, 2, 4, 5, 7, 8, 10, 11) */
-.tick {
-    position: absolute;
-    width: 1.5px;
-    height: 10px;
-    background: #4DAB7A;
-    opacity: 0.6;
-    left: 50%;
-    top: 0;
-    transform-origin: 50% 130px; 
-    margin-left: -0.75px;
-}
-
-/* Major Ticks (12, 3, 6, 9) */
-.tick.major {
-    height: 14px; 
-    opacity: 0.8;  
-}
-
-/* Hands Configuration */
-.hand-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-}
-
-.hand {
-    position: absolute;
-    left: 50%;
-    background: #4DAB7A;
-}
-
-.hour {
-    width: 3.5px;
-    height: 75px; 
-    bottom: -15px; 
-    transform-origin: 50% calc(100% - 15px);
-    margin-left: -1.75px;
-    opacity: 0.95;
-    border-radius: 10px;
-}
-
-.minute {
-    width: 2.2px;
-    height: 110px; 
-    bottom: -15px; 
-    transform-origin: 50% calc(100% - 15px);
-    margin-left: -1.1px;
-    opacity: 0.85;
-    border-radius: 10px;
-}
-
-/* Proportioned elegant second hand */
-.second {
-    width: 1px;
-    height: 115px; 
-    bottom: -20px; 
-    transform-origin: 50% calc(100% - 20px);
-    margin-left: -0.5px;
-    opacity: 0.6; 
-    background: #4DAB7A;
-}
-
-/* Solid Aesthetic Pivot Dot */
-.center-dot {
+/* Center Pin */
+.clock::after {
+    content: '';
     position: absolute;
     width: 8px;
     height: 8px;
-    background: #4DAB7A;
+    background: #ffffff;
     border-radius: 50%;
-    left: 50%;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
 }
 
-/* Shifted Display Info Layout */
-.center {
+/* Base styling for all hands */
+.hand {
     position: absolute;
+    bottom: 50%;
     left: 50%;
-    top: 62%; 
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 5; 
+    transform-origin: bottom center;
+    background: #ffffff; /* White hands */
+    border-radius: 4px;
+    z-index: 5;
 }
 
-/* Updated Typography */
-.time {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 27px;
-    font-weight: normal;
-    letter-spacing: 0.5px;
-    color: #4DAB7A;
-    white-space: nowrap;
+.hour {
+    width: 4px;
+    height: 50px;
 }
 
-.date {
-    margin-top: 4px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 15px;
-    font-weight: normal;
-    color: #527c65; 
-    white-space: nowrap;
+.minute {
+    width: 3px;
+    height: 70px;
 }
+
+/* Sleeker second hand */
+.second {
+    width: 1.5px;
+    height: 80px;
+    background: #aaaaaa; /* Soft light grey for subtle contrast */
+}
+
+/* Minimalist Dial Indicators */
+.indicator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: #ffffff; /* White numbers */
+    padding: 6px;
+}
+
+.twelve { transform: rotate(0deg); }
+.twelve span { display: inline-block; }
+
+.three { transform: rotate(90deg); }
+.three span { display: inline-block; transform: rotate(-90deg); }
+
+.six { transform: rotate(180deg); }
+.six span { display: inline-block; transform: rotate(-180deg); }
+
+.nine { transform: rotate(270deg); }
+.nine span { display: inline-block; transform: rotate(-270deg); }
 </style>
 </head>
-
 <body>
 
 <div class="clock">
-    <!-- Hour Ticks -->
-    <div class="ticks" id="ticks"></div>
+    <!-- Dial Numbers -->
+    <div class="indicator twelve"><span>12</span></div>
+    <div class="indicator three"><span>3</span></div>
+    <div class="indicator six"><span>6</span></div>
+    <div class="indicator nine"><span>9</span></div>
 
     <!-- Clock Hands -->
-    <div class="hand-container">
-        <div id="hour" class="hand hour"></div>
-        <div id="minute" class="hand minute"></div>
-        <div id="second" class="hand second"></div>
-    </div>
-    
-    <!-- Central Pivot Dot -->
-    <div class="center-dot"></div>
-
-    <!-- Digital Overlay -->
-    <div class="center">
-        <div class="time" id="digital"></div>
-        <div class="date" id="date"></div>
-    </div>
+    <div class="hand hour" id="hour"></div>
+    <div class="hand minute" id="min"></div>
+    <div class="hand second" id="sec"></div>
 </div>
 
 <script>
-// Generate 12 dial ticks dynamically
-const ticksContainer = document.getElementById("ticks");
-for (let i = 0; i < 12; i++) {
-    const tick = document.createElement("div");
-    tick.className = "tick";
-    
-    if (i % 3 === 0) {
-        tick.classList.add("major");
-    }
-    
-    tick.style.transform = `rotate(${i * 30}deg)`;
-    ticksContainer.appendChild(tick);
-}
+const hourHand = document.getElementById('hour');
+const minHand = document.getElementById('min');
+const secHand = document.getElementById('sec');
 
-function update(){
+function runClock() {
     const now = new Date();
+    const secs = now.getSeconds();
+    const mins = now.getMinutes();
+    const hrs = now.getHours();
 
-    let h = now.getHours();
-    const m = now.getMinutes();
-    const s = now.getSeconds();
-    const ms = now.getMilliseconds(); 
-    
-    const ampm = h >= 12 ? 'PM' : 'AM'; 
-    const displayHour = h % 12 === 0 ? 12 : h % 12;
+    const secDegrees = (secs / 60) * 360;
+    const minDegrees = (mins / 60) * 360 + (secs / 60) * 6;
+    const hrDegrees = (hrs / 12) * 360 + (mins / 60) * 30;
 
-    const secondAngle = (s * 6) + (ms * 0.006);
-    const minuteAngle = (m * 6) + (s * 0.1);
-    const hourAngle = ((h % 12) * 30) + (m * 0.5);
-
-    document.getElementById("hour").style.transform = `rotate(${hourAngle}deg)`;
-    document.getElementById("minute").style.transform = `rotate(${minuteAngle}deg)`;
-    document.getElementById("second").style.transform = `rotate(${secondAngle}deg)`;
-
-    const hourStr = String(displayHour).padStart(2, "0");
-    const minStr = String(m).padStart(2, "0");
-
-    document.getElementById("digital").textContent = `${hourStr}:${minStr} ${ampm}`;
-
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    document.getElementById("date").textContent = 
-        days[now.getDay()] + " " + 
-        months[now.getMonth()] + " " + 
-        now.getDate();
-        
-    requestAnimationFrame(update);
+    secHand.style.transform = `translateX(-50%) rotate(${secDegrees}deg)`;
+    minHand.style.transform = `translateX(-50%) rotate(${minDegrees}deg)`;
+    hourHand.style.transform = `translateX(-50%) rotate(${hrDegrees}deg)`;
 }
 
-requestAnimationFrame(update);
+setInterval(runClock, 1000);
+runClock();
 </script>
 
 </body>
